@@ -14,6 +14,7 @@ import { fetchData } from "./api";
 class App extends React.Component {
     state = {
         data: {},
+        country: "",
     };
     // React automatically set state in the back code: no need to code constructor again
     async componentDidMount() {
@@ -21,12 +22,19 @@ class App extends React.Component {
         console.log(fetchedData);
         this.setState({ data: fetchedData });
     }
+    handleCountryChange = async (country) => {
+        // console.log(country);
+        const fetchedData = await fetchData(country);
+        console.log(fetchedData);
+        // fetch the data
+        // set the state
+    };
     render() {
         const { data } = this.state;
         return (
             <div className={styles.container}>
                 <Cards data={data} />
-                <CountryPicker />
+                <CountryPicker handleCountryChange={this.handleCountryChange} />
                 <Chart />
             </div>
         );

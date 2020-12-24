@@ -1,3 +1,12 @@
+# Explanation
+
+This respository followed https://www.youtube.com/watch?v=khJlrj3Y6Ls as a guideline.
+
+# Environment
+
+node: 14.15.1
+npm: 6.14.10
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
