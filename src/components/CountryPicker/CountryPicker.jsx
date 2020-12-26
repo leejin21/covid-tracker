@@ -4,7 +4,7 @@
 // * IMPORT SECTION
 
 import React, { useState, useEffect } from "react";
-import { NaiveSelect, FormControl, NativeSelect } from "@material-ui/core";
+import { FormControl, NativeSelect } from "@material-ui/core";
 
 // import custom modules
 import styles from "./CountryPicker.module.css";
@@ -28,9 +28,14 @@ const CountryPicker = ({ handleCountryChange }) => {
                 defaultValue=""
                 onChange={(e) => handleCountryChange(e.target.value)}
             >
-                <option value="global">Global</option>
+                <option value="">
+                    {/* value="global"이라고 하면 handleCountryChange에 country로 global이 들어가서 fetch를 잘 못하게 됨 */}
+                    Global
+                </option>
                 {fetchedCountries.map((country, i) => (
-                    <option value={country}>{country}</option>
+                    <option value={country} key={i}>
+                        {country}
+                    </option>
                 ))}
             </NativeSelect>
         </FormControl>

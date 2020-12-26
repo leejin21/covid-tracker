@@ -13,16 +13,43 @@ import { fetchDailyData } from "../../api";
 ///////////////////////////////////////////////////////
 // * MAIN SECTION
 
-const Chart = () => {
+const Chart = ({ data: { confirmed, recovered, deaths }, country }) => {
+    // props: data, country(used for each country cases: bar chart)
     const [dailyData, setDailyData] = useState([]);
+    // only used for global data
 
     useEffect(() => {
+        // if 2nd param== empty array: makes useEffect behave as componentdidmount
         const fetchAPI = async () => {
             setDailyData(await fetchDailyData());
         };
         console.log(dailyData);
         fetchAPI();
     }, []);
+
+    const barChart = confirmed ? (
+        <Bar
+            data={{
+                labels: ["Infected", "Recovered", "Deaths"],
+                datasets: [
+                    {
+                        label: "people",
+                        backgroundColor: [
+                            // backgroundcolor와 labels는 대응됨
+                            "rgba(0, 0, 255, 0.5)",
+                            "rgba(0, 255, 0, 0.5)",
+                            "rgba(255, 0, 0, 0.5)",
+                        ],
+                        data: [confirmed.value, recovered.value, deaths.value],
+                    },
+                ],
+            }}
+            options={{
+                legend: { display: false },
+                title: { display: true, text: `Current state in ${country}` },
+            }}
+        ></Bar>
+    ) : null;
 
     const lineChart = dailyData.length ? (
         <Line
@@ -47,7 +74,9 @@ const Chart = () => {
         ></Line>
     ) : null;
 
-    return <div className={styles.container}>{lineChart}</div>;
+    return (
+        <div className={styles.container}>{country ? barChart : lineChart}</div>
+    );
 };
 
 ///////////////////////////////////////////////////////
